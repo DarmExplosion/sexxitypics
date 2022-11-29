@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exity.pics</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="shortcut icon" type="image/jpg" href="http://assets.stickpng.com/thumbs/5a5a8d8d14d8c4188e0b08ef.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <meta property="og:title" content="{{ user.name|escape }}'s portfolio and profile page"/>
+    <meta property="og:description" content="An invite only uploading service that respects your privacy."/>
+    <meta property="og:type" content="website"/>
+    <meta name="theme-color" content="#7f26d9">
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</head>
+<body>
+<div class="modal no-blur show d-block" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 960px;">
+        <div class="modal-body image">
+                <div class="modal-content image">
+                    <div class="modal-content"
+                         style="border-radius: 32px 32px 0px 0px; padding: 0;">
+                        <img src="{{ background }}?rand={{ random(1, 9999999) }}"
+                             style="width: 100%; height: 100%; border-radius: 32px 32px 0px 0px;">
+
+                        <div class="image-text alternative">
+                            <div class="card blurred" style="margin-left: 25px; margin-right: 25px; bottom: -50px; z-index: 1000;">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <img src="{{ avatar }}?rand={{ random(1, 9999999) }}" style="border-radius: 50%; height: 60px; width: 60px; object-fit: cover;">
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <h1 style="line-height: 1;">
+                                            {{ user.name|escape }}
+                                            {% if user.staff == true %}
+                                                <span class="badge bg-secondary" style="border: none !important; font-size: 12px;"><i class="fas fa-user-cog p-0 white-icon"></i> Staff</span>
+                                            {% elseif user.premium == true %}
+                                                <span class="badge bg-secondary" style="border: none !important; font-size: 12px;"><i class="fas fa-user-check p-0 white-icon"></i> Premium</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary" style="border: none !important; font-size: 12px;"><i class="fas fa-user p-0 white-icon"></i> Member</span>
+                                            {% endif %}
+                                        </h1>
+                                        <small style="line-height: 0.5 !important;">
+                                            {% if user.portfolio.status == '' %}
+                                                <i style="padding: 0; color: #cccccc;">Hasn't set his status yet.</i>
+                                            {% elseif user.portfolio.status != '' %}
+                                                <i style="padding: 0; color: #cccccc;">{{ user.portfolio.status|escape }}</i>
+                                            {% endif %}
+                                        </small>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-content border-0" style="max-width: 100%;">
+                        <br>
+                        {% if user.portfolio.description == '' %}
+                            <h1>{{ user.name|escape|capitalize }}'s portfolio</h1>
+                            is empty now. {{ user.name|escape|capitalize }} has to set some text.
+                        {% elseif user.portfolio.description != '' %}
+                            {{ user.portfolio.description|escape }}
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="modal-content" style="border-radius: 16px !important; padding: 15px;">
+                        <small>
+                            exity.pics
+                            <b>|</b>
+                            Made by <b>onlepes</b> and exity community 💜
+                            <b>|</b>
+                            Accepting
+                            <div class="paypal-badge" style="margin-left: 5px;">
+                                <img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/08/paypal_logo.png" style="width: 12px; vertical-align: middle;">
+                            </div>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

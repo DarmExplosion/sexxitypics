@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exity.pics</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="shortcut icon" type="image/jpg" href="http://assets.stickpng.com/thumbs/5a5a8d8d14d8c4188e0b08ef.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <meta property="og:title" content="exity.pics"/>
+    <meta property="og:description" content="the image host where privacy matters"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://exity.pics/static/banner.png"/>
+    <meta name="theme-color" content="#7f26d9">
+    <meta name="twitter:card" content="summary_large_image">
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+</head>
+<body>
+<div class="modal no-blur show d-block" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 1300px;">
+        <div class="modal-body image">
+            <div class="modal-content image">
+                <div class="modal-body image">
+                    <img src="/static/images/header.png" class="top-border-30" style="max-width: 100%; height: 100px; object-fit: cover;">
+                    <div class="image-text alternative" style="margin-top: 50px !important;">
+                        <div class="button-group" style="max-width: 100%;">
+                            <nav>
+                                <div class="nav nav-tabs border-0" id="nav-tab" role="tablist">
+                                    <button class="navbar-button active" id="dashboard-tab" data-bs-toggle="tab"
+                                            data-bs-target="#dashboard" type="button" role="tab" aria-controls="true"
+                                            aria-selected="true"><i class="fas fa-location-arrow white-icon p-0"></i>
+                                        Dashboard
+                                    </button>
+                                    <button class="navbar-button" id="profile-tab" data-bs-toggle="tab"
+                                            data-bs-target="#profile"
+                                            type="button" role="tab" aria-controls="profile" aria-selected="false"><i
+                                                class="fas fa-user-circle white-icon p-0"></i> Profile
+                                    </button>
+                                    <button class="navbar-button" id="settings-tab" data-bs-toggle="tab"
+                                            data-bs-target="#settings"
+                                            type="button" role="tab" aria-controls="settings" aria-selected="false"><i
+                                                class="fas fa-cogs white-icon p-0"></i> Settings
+                                    </button>
+                                    <button class="navbar-button" id="premium-tab" data-bs-toggle="tab"
+                                            data-bs-target="#premium"
+                                            type="button" role="tab" aria-controls="settings" aria-selected="false"><i
+                                                class="fas fa-star white-icon p-0"></i> Premium
+                                    </button>
+                                    <div class="vertical-line">
+
+                                    </div>
+                                    <form method="post">
+                                        <button class="navbar-button" name="logout"><i
+                                                    class="fas fa-sign-out-alt white-icon p-0"></i> Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            <div class="tab-content">
+                <div id="dashboard" class="tab-pane fade show active">
+                    <div class="modal-content image">
+                        <div class="modal-content border-0">
+
+                            {% if type == 'none' %}
+                            {% elseif type == 'success' %}
+                                <div class="card alert success">
+                            <span>
+                                <i class="fas success fa-check white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% elseif type == 'error' %}
+                                <div class="card alert error">
+                            <span>
+                                <i class="fas error fa-times white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% endif %}
+
+                            <div class="header-group">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <i class="fas fa-location-arrow square-icon white-icon"></i>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <h1 style="line-height: 1;">
+                                            Dashboard
+                                        </h1>
+                                        <small>View and manage information.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card message hover" onclick="document.getElementById('profile-tab').click();">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <img src="{{ avatar }}?rand={{ random(1, 9999999) }}" style="border-radius: 50%; height: 50px; width: 50px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h1 style="line-height: 1;">
+                                                    {{ user.name|escape }}
+                                                </h1>
+                                                <small>Edit profile and portfolio.</small>
+                                            </div>
+                                            <div class="col-auto my-auto">
+                                                <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nav nav-tabs border-0 d-flex justify-content-center" style="margin: 5px; max-width: 100% !important;">
+                                        <button class="navbar-button"><i class="fas fa-user white-icon p-0"></i> User ID: {{ user.id }}</button>
+                                        <button class="navbar-button"><i class="fas fa-star white-icon p-0"></i> Subscription: {{ user.premium == false ? 'Expired' : 'Subscribed' }}</button>
+                                        <button class="navbar-button"><i class="fas fa-clock white-icon p-0"></i> Registered on: {{ user.registered|date('jS F, H:m:s') }}</button>
+                                    </div>
+                                    <p class="form-text-lines">
+                                        <span>Your statistics</span>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col" style="padding-right: 0;">
+                                            <div class="card message">
+                                            <span>
+                                                <h1 style="line-height: 0.9;">
+                                                    {{ images.total }}
+                                                </h1>
+                                                <small>Images since your registration</small>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="col" style="padding-left: 0;">
+                                            <div class="card message">
+                                            <span>
+                                                <h1 style="line-height: 0.9;">
+                                                    {{ images.twodays }}
+                                                </h1>
+                                                <small>Images in last 2 days</small>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card message" style="padding: 0;">
+                                        <div class="hover">
+                                            <div class="row" data-bs-toggle="modal" data-bs-target="#usernameModal">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-user rounded-icon white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                    <h2 style="line-height: 1;">
+                                                        Username
+                                                    </h2>
+                                                    <small>Change your public username.</small>
+                                                </div>
+                                                <div class="col-auto my-auto">
+                                                    <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="hover">
+                                            <div class="row" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-lock rounded-icon white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                    <h2 style="line-height: 1;">
+                                                        Password
+                                                    </h2>
+                                                    <small>Change your password.</small>
+                                                </div>
+                                                <div class="col-auto my-auto">
+                                                    <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="form-text-lines">
+                                        <span>Additional security</span>
+                                    </p>
+                                    <div class="card message">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <i class="fas fa-shield-alt rounded-icon white-icon"></i>
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h2 style="line-height: 1;">
+                                                    2FA (SOON)
+                                                </h2>
+                                                <small>Extended security feature.</small>
+                                            </div>
+                                            <div class="col-auto my-auto">
+                                                <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="profile" class="tab-pane fade">
+                    <div class="modal-content image">
+                        <div class="modal-content"
+                             style="padding: 0;">
+                            <img src="{{ background }}?rand={{ random(1, 9999999) }}"
+                                 style="width: 100%; height: 100%; border-radius: 0 0 32px 32px !important;">
+
+                            <div class="image-text alternative" style="top: 25px;">
+                                {% if type == 'none' %}
+                                {% elseif type == 'success' %}
+                                    <div class="card alert success">
+                                        <span>
+                                            <i class="fas success fa-check white-icon p-0"></i> {{ response }}
+                                        </span>
+                                    </div>
+                                    <br>
+                                {% elseif type == 'error' %}
+                                    <div class="card alert error">
+                                        <span>
+                                            <i class="fas error fa-times white-icon p-0"></i> {{ response }}
+                                        </span>
+                                    </div>
+                                    <br>
+                                {% endif %}
+                            </div>
+                            <div class="image-text alternative">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <img src="{{ avatar }}?rand={{ random(1, 9999999) }}" style="border-radius: 50%; height: 150px; width: 150px; object-fit: cover;">
+
+                                        {% if user.premium == false %}
+                                            <div class="d-flex justify-content-center" style="margin-left: 15px; margin-top: 15px; margin-bottom: 15px;">
+                                                <div class="row align-items-center" style="max-width: 1000px;">
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                                                            <i class="fas fa-user white-icon p-0"></i> Change avatar
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active">
+                                                            <i class="fas fa-edit white-icon p-0"></i> Change background <i class="fas fa-star premium-icon"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+                                                            <i class="fas fa-align-right white-icon p-0"></i> Edit portfolio
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% elseif user.premium == true %}
+                                            <div class="d-flex justify-content-center" style="margin-left: 15px; margin-top: 15px; margin-bottom: 15px;">
+                                                <div class="row" style="max-width: 1000px;">
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                                                            <i class="fas fa-user white-icon p-0"></i> Change avatar
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active" data-bs-toggle="modal" data-bs-target="#backgroundModal">
+                                                            <i class="fas fa-edit white-icon p-0"></i> Change background <i class="fas fa-star premium-icon"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button class="navbar-button active" data-bs-toggle="modal" data-bs-target="#portfolioModal">
+                                                            <i class="fas fa-align-right white-icon p-0"></i> Edit portfolio
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="settings" class="tab-pane fade">
+                    <div class="modal-content image">
+                        <div class="modal-content border-0">
+
+                            {% if type == 'none' %}
+                            {% elseif type == 'success' %}
+                                <div class="card alert success">
+                            <span>
+                                <i class="fas success fa-check white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% elseif type == 'error' %}
+                                <div class="card alert error">
+                            <span>
+                                <i class="fas error fa-times white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% endif %}
+
+                            <div class="header-group">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <i class="fas fa-cogs square-icon white-icon"></i>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <h1 style="line-height: 1;">
+                                            Settings
+                                        </h1>
+                                        <small>Manage your settings.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card message hover">
+                                        <div class="row">
+                                            <div class="col-auto my-auto">
+                                                <div>
+                                                    <form method="post">
+                                                        <div class="form-check form-switch form-switch-lg align-middle">
+                                                            <input class="form-check-input" type="checkbox" name="embedToggle"
+                                                                   onchange="this.form.submit()"
+                                                                    {{ (user.embed.enabled == false) ?: 'checked' }}
+                                                            />
+                                                            <input type="hidden" value={{ (user.embed.enabled == false) ? "true" : "false" }} name="embedHidden"
+                                                            />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h1 style="line-height: 1;">
+                                                    Embed
+                                                </h1>
+                                                <small>Enables an embedded preview.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nav nav-tabs border-0 d-flex justify-content-center" style="margin: 5px; max-width: 100% !important;">
+                                        <button class="navbar-button"><i class="fas fa-user white-icon p-0"></i> Domain: {{ user.domain|escape }}</button>
+                                            <form method="post">
+                                                <button class="navbar-button active" name="changeToken"><i class="fas fa-sync white-icon p-0"></i> Change token</button>
+                                                <button class="navbar-button active" name="downloadConfig"><i class="fas fa-save white-icon p-0"></i> Download config</button>
+                                            </form>
+                                    </div>
+                                    <p class="form-text-lines">
+                                        <span>Domain</span>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col" style="padding: 0 15px 15px;">
+                                            <form method="post">
+                                                <div class="input-group mb-3">
+                                                    <select class="form-select" name="domain" style="margin-top: 5px;">
+                                                        {% for domain in domains %}
+                                                            <option value="{{ domain|escape }}">{{ domain|escape }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="button-big" name="changeDomain" style="width: 100%;"><i
+                                                            class="fas fa-edit white-icon p-0"></i> Change
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card message" style="padding: 0;">
+                                        <div class="hover">
+                                            <div class="row" data-bs-toggle="modal" data-bs-target="#embedModal">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-align-right rounded-icon white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                    <h2 style="line-height: 1;">
+                                                        Embed fields
+                                                    </h2>
+                                                    <small>Change your embed texts.</small>
+                                                </div>
+                                                <div class="col-auto my-auto">
+                                                    <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="hover">
+                                            <div class="row" data-bs-toggle="modal" data-bs-target="#colorModal">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-paint-brush rounded-icon white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                    <h2 style="line-height: 1;">
+                                                        Color
+                                                    </h2>
+                                                    <small>Change your embed color.</small>
+                                                </div>
+                                                <div class="col-auto my-auto">
+                                                    <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="form-text-lines">
+                                        <span>Additional settings</span>
+                                    </p>
+                                    <div class="card message">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <i class="fas fa-tools rounded-icon white-icon"></i>
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h2 style="line-height: 1;">
+                                                    URL types (SOON)
+                                                </h2>
+                                                <small>Use unique URL types.</small>
+                                            </div>
+                                            <div class="col-auto my-auto">
+                                                <span class="align-middle"><i class="fas fa-chevron-right"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="premium" class="tab-pane fade">
+                    <div class="modal-content image">
+                        <div class="modal-content border-0">
+
+                            {% if type == 'none' %}
+                            {% elseif type == 'success' %}
+                                <div class="card alert success">
+                            <span>
+                                <i class="fas success fa-check white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% elseif type == 'error' %}
+                                <div class="card alert error">
+                            <span>
+                                <i class="fas error fa-times white-icon p-0"></i> {{ response }}
+                            </span>
+                                </div>
+                                <br>
+                            {% endif %}
+
+                            <div class="header-group">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <i class="fas fa-star square-icon white-icon"></i>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <h1 style="line-height: 1;">
+                                            Premium
+                                        </h1>
+                                        <small>Get more from our host.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card message">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <i class="fas fa-user rounded-icon white-icon"></i>
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h2 style="line-height: 1;">
+                                                    Classic
+                                                </h2>
+                                                <small>Basic functionality and access.</small>
+                                            </div>
+                                        </div>
+                                        <p class="form-text-lines" style="margin-left: 15px; margin-right: 15px;">
+                                            <span style="background-color: #0F0F0F;">Features</span>
+                                        </p>
+                                        <div style="margin-left: 15px;">
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Basic access
+                                                </span>
+                                                    <br>
+                                                    <small>Access to our uploader and website.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Custom avatar
+                                                </span>
+                                                    <br>
+                                                    <small>Customized avatar on your portfolio page.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Custom portfolio
+                                                </span>
+                                                    <br>
+                                                    <small>Customized texts on your portfolio page.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="form-text-lines" style="margin-left: 15px; margin-right: 15px;"></p>
+                                        <button class="navbar-button active" style="width: 100%;" disabled>
+                                            <i class="fas fa-check white-icon p-0"></i> Subscribed
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card message">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <i class="fas fa-star rounded-icon white-icon"></i>
+                                            </div>
+                                            <div class="col-auto p-0">
+                                                <h2 style="line-height: 1;">
+                                                    Premium
+                                                </h2>
+                                                <small>Extended access.</small>
+                                            </div>
+                                        </div>
+                                        <p class="form-text-lines" style="margin-left: 15px; margin-right: 15px;">
+                                            <span style="background-color: #0F0F0F;">Features</span>
+                                        </p>
+                                        <div style="margin-left: 15px;">
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Custom profile background
+                                                </span>
+                                                    <br>
+                                                    <small>Customized profile background.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Custom profile theme (SOON)
+                                                </span>
+                                                    <br>
+                                                    <small>Customized colors on your portfolio page.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Custom image theme (SOON)
+                                                </span>
+                                                    <br>
+                                                    <small>Customized colors on image pages.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <i class="fas fa-check white-icon"></i>
+                                                </div>
+                                                <div class="col-auto p-0">
+                                                <span style="line-height: 1;">
+                                                    Request an invite
+                                                </span>
+                                                    <br>
+                                                    <small>Request an invite code monthly.</small>
+                                                </div>
+                                            </div>
+                                            <p class="form-text-lines" style="border: none;"></p>
+                                            <small>+ all basic features and upcoming features...</small>
+                                        </div>
+                                        <p class="form-text-lines" style="margin-left: 15px; margin-right: 15px;"></p>
+
+                                        {% if user.premium == false %}
+                                            <a href="https://discord.com/upload">
+                                                <button class="navbar-button active" style="width: 100%;">
+                                                    <i class="fas fa-shopping-cart white-icon p-0"></i> Buy — 10$/lifetime
+                                                </button>
+                                            </a>
+                                        {% elseif user.premium == true %}
+                                            <button class="navbar-button active" style="width: 100%;" disabled>
+                                                <i class="fas fa-check white-icon p-0"></i> Subscribed
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <br>
+            <div class="modal-content" style="border-radius: 16px !important; padding: 15px;">
+                <small>
+                    exity.pics
+                    <b>|</b>
+                    Made by <b>onlepes</b> and exity community 💜
+                    <b>|</b>
+                    Accepting
+                    <div class="paypal-badge" style="margin-left: 5px;">
+                        <img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/08/paypal_logo.png" style="width: 12px; vertical-align: middle;">
+                    </div>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal normal fade" id="usernameModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-user rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Username
+                        </h1>
+                        <small>Change your public username.</small>
+                    </div>
+                </div>
+                <br>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user white-icon p-0"></i></span>
+                        <input type="text" class="form-control icon" placeholder="New username" name="usernameChangeField">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock white-icon p-0"></i></span>
+                        <input type="password" class="form-control icon" placeholder="Current password" name="passwordCurrentChangeField">
+                    </div>
+                    <button type="submit" class="button-big" name="usernameChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <p class="form-text-lines"></p>
+                <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        3 characters minimum, 16 characters maximum
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal normal fade" id="embedModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-align-right rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Embed fields
+                        </h1>
+                        <small>Change your embed texts.</small>
+                    </div>
+                </div>
+                {% if user.premium == true %}
+                    <p class="form-text-lines">
+                        <span style="background-color: transparent !important;">Author</span>
+                    </p>
+                    <form method="post">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-align-right white-icon p-0"></i></span>
+                            <input type="text" class="form-control icon" placeholder="{{ user.embed.author == '' ? 'No author name' : user.embed.author|escape }}" name="authorField">
+                        </div>
+                        <button type="submit" class="button-big" name="authorChange" style="width: 100%;"><i
+                                    class="fas fa-edit white-icon p-0"></i> Change
+                        </button>
+                    </form>
+                    <br>
+                {% endif %}
+                <p class="form-text-lines">
+                    <span style="background-color: transparent !important;">Title</span>
+                </p>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-align-right white-icon p-0"></i></span>
+                        <input type="text" class="form-control icon" placeholder="{{ user.embed.title == '' ? 'No title' : user.embed.title|escape }}" name="titleField">
+                    </div>
+                    <button type="submit" class="button-big" name="titleChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <br>
+                <p class="form-text-lines">
+                    <span style="background-color: transparent !important;">Description</span>
+                </p>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-align-right white-icon p-0"></i></span>
+                        <input type="text" class="form-control icon" placeholder="{{ user.embed.description == '' ? 'No description' : user.embed.description|escape }}" name="descriptionField">
+                    </div>
+                    <button type="submit" class="button-big" name="descriptionChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <p class="form-text-lines"></p>
+                <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        128 characters maximum
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal normal fade" id="colorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-paint-brush rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Color
+                        </h1>
+                        <small>Change your embed color.</small>
+                    </div>
+                </div>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <input type="color" class="form-control form-control-color" name="colorField"
+                               value="{{ user.embed.color|escape }}">
+                    </div>
+                    <button type="submit" class="button-big" name="colorChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal normal fade" id="portfolioModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-align-right rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Portfolio
+                        </h1>
+                        <small>Edit your public portfolio.</small>
+                    </div>
+                </div>
+                <p class="form-text-lines">
+                    <span style="background-color: transparent !important;">Status</span>
+                </p>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-signal white-icon p-0"></i></span>
+                        <input type="text" class="form-control icon" placeholder="{{ user.portfolio.status == '' ? 'No status' : user.portfolio.status|escape }}" name="statusField">
+                    </div>
+                    <button type="submit" class="button-big" name="statusChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <br>
+                <p class="form-text-lines">
+                    <span style="background-color: transparent !important;">Portfolio</span>
+                </p>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-align-right white-icon p-0"></i></span>
+                        <textarea style="resize: none;" class="form-control icon" placeholder="{{ user.portfolio.description|escape }}" name="portfolioChangeField" rows="6"></textarea>
+                    </div>
+                    <button type="submit" class="button-big" name="portfolioChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <p class="form-text-lines"></p>
+                <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        16-512 characters maximum
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal normal fade" id="passwordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-lock rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Password
+                        </h1>
+                        <small>Change your password.</small>
+                    </div>
+                </div>
+                <br>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock white-icon p-0"></i></span>
+                        <input type="password" class="form-control icon" placeholder="New password" name="passwordChangeField">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock white-icon p-0"></i></span>
+                        <input type="password" class="form-control icon" placeholder="Verify password" name="passwordVerifyChangeField">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock white-icon p-0"></i></span>
+                        <input type="password" class="form-control icon" placeholder="Current password" name="passwordCurrentChangeField">
+                    </div>
+                    <button type="submit" class="button-big" name="passwordChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <p class="form-text-lines"></p>
+                <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        6 characters minimum, 64 characters maximum
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal normal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content normal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-auto">
+                        <i class="fas fa-user-circle rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                    </div>
+                    <div class="col-auto p-0">
+                        <h1 style="line-height: 0.8;">
+                            Avatar
+                        </h1>
+                        <small>Change your avatar.</small>
+                    </div>
+                </div>
+                <br>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input class="form-control" type="file" name="avatarForm">
+                    </div>
+                    <button type="submit" class="button-big" name="avatarChange" style="width: 100%;"><i
+                                class="fas fa-edit white-icon p-0"></i> Change
+                    </button>
+                </form>
+                <p class="form-text-lines"></p>
+                <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        .jpg, .png, .gif — 5MB maximum — 200x200 minimum, 2000x2000 maximum
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.premium == true %}
+    <div class="modal normal fade" id="backgroundModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content normal">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-auto">
+                            <i class="fas fa-image rounded-icon white-icon" style="font-size: 20px; padding-top: 15px; height: 50px !important; width: 50px !important;"></i>
+                        </div>
+                        <div class="col-auto p-0">
+                            <h1 style="line-height: 0.8;">
+                                Background
+                            </h1>
+                            <small>Change your profile's background.</small>
+                        </div>
+                    </div>
+                    <br>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <input class="form-control" type="file" name="backgroundForm">
+                        </div>
+                        <button type="submit" class="button-big" name="backgroundChange" style="width: 100%;"><i
+                                    class="fas fa-edit white-icon p-0"></i> Change
+                        </button>
+                    </form>
+                    <p class="form-text-lines"></p>
+                    <div class="card alert" style="margin: 0;">
+                    <span>
+                        <i class="fas notice fa-exclamation white-icon p-0"></i>
+                        .jpg, .png, .gif — 15MB maximum — 500x500 minimum, 4000x4000 maximum
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elseif user.premium == false %}
+{% endif %}
+</body>
+</html>
